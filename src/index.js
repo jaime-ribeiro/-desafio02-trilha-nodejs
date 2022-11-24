@@ -29,9 +29,10 @@ function checksCreateTodosUserAvailability(request, response, next) {
   const { user } = request;
   const {todos} = user
   
+  const sumTodos = todos.reduce((acc) => acc + 1,0);
   if(user.pro===true){
     return next();
-  }else if(user.pro===false && todos.length > 9){
+  }else if(user.pro===false && sumTodos >= 10){
     return response.status(403).json({error: "limit reached"});
   }else{
     return next();
